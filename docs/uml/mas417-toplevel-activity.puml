@@ -1,0 +1,42 @@
+@startuml
+title Top-level activity: pendulum kit factory
+skinparam monochrome true
+skinparam shadowing false
+|Operator|
+start
+:Start Spoolman (Docker);
+:Register makerspace filaments
+and spools (POST);
+|Customer|
+repeat
+  :Open order page;
+  |Program|
+  :Show filaments for each part
+  (GET from Spoolman);
+  |Customer|
+  :Enter period, size limits,
+  axle diameter, material limit
+  and filament for each part;
+  |Program|
+  :Save order as received;
+  |Customer|
+repeat while (another order?) is ([yes]) not ([no])
+|Operator|
+:Start production;
+|Program|
+repeat
+  :Process next order
+  (design, validate, 3MF files,
+  simulation, register filament use);
+  note right
+    Detailed in the activity
+    diagram "Process one order"
+  end note
+repeat while (more orders waiting?) is ([yes]) not ([no])
+:Show each order as done, rejected
+or postponed, with the reason;
+|Customer|
+:See order status and
+download the 3MF files;
+stop
+@enduml

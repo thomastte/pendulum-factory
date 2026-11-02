@@ -1,0 +1,21 @@
+@startuml
+skinparam shadowing false
+start
+:lo = smallest weight position
+hi = largest weight position;
+if (same sign at lo and hi?) then ([yes])
+  :Reject: period not reachable;
+  stop
+else ([no])
+endif
+repeat
+  :mid = (lo + hi) / 2;
+  if (sign change between lo and mid?) then ([yes])
+    :hi = mid;
+  else ([no])
+    :lo = mid;
+  endif
+repeat while (hi - lo > tolerance?) is ([yes]) not ([no])
+:Return (lo + hi) / 2;
+stop
+@enduml

@@ -1,0 +1,69 @@
+@startuml
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+hide empty members
+
+package "Python" {
+  class Order {
+    +id: str
+    +target_period: float
+    +amplitude_deg: float
+    +max_height: float
+    +axle_diameter: float
+    +max_material: float
+    +filament_per_part: dict
+    +status: str
+    +reason: str
+    +save(): None
+    {static} load(order_id: str): Order
+  }
+  class PendulumParams {
+    +axle_diameter: float
+    +weight_position: float
+    +weight_radius: float
+    +arm_width: float
+    +base_clearance: float
+    +arm_length(): float
+    +stand_height(): float
+    +validate(printer, order): list
+    +save(path): None
+    {static} load(path): PendulumParams
+  }
+  class PrintSettings {
+    +infill: float
+    +walls: int
+    +line_width: float
+  }
+  class SpoolmanClient {
+    -base: str
+    -timeout: float
+    +get_filaments(): list
+    +get_spools(): list
+    +use(spool_id: int, grams: float): dict
+  }
+  class OrderProcessor {
+    -stock: SpoolmanClient
+    +process(order: Order): None
+    -reject(order: Order, reason: str): None
+    -postpone(order: Order, reason: str): None
+  }
+}
+package "C++" {
+  class PendulumSim {
+    -k_: double
+    -c_: double
+    +derivative(s: State): State
+    +rk4Step(s: State, dt: double): State
+  }
+  class State <<struct>> {
+    +theta: double
+    +omega: double
+  }
+}
+OrderProcessor "1" --> "1" SpoolmanClient : uses
+OrderProcessor ..> Order : processes
+Order "1" --> "0..1" PendulumParams : design
+PendulumParams *-- "1" PrintSettings
+OrderProcessor ..> PendulumSim : runs (subprocess)
+PendulumSim ..> State
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+title Use case diagram: pendulum kit factory
+skinparam monochrome true
+skinparam shadowing false
+actor Customer
+actor Operator
+actor "Spoolman\n(material stock)" as Spoolman
+rectangle "Pendulum kit factory" {
+  usecase "Place order" as UC1
+  usecase "Select filament\nfor each part" as UC2
+  usecase "View order status\nand 3MF files" as UC3
+  usecase "Register filaments\nand spools" as UC4
+  usecase "Start production" as UC5
+  usecase "Process order" as UC6
+  usecase "Register filament use" as UC7
+}
+Customer -- UC1
+Customer -- UC3
+Operator -- UC3
+Operator -- UC4
+Operator -- UC5
+UC1 ..> UC2 : <<include>>
+UC5 ..> UC6 : <<include>>
+UC6 ..> UC7 : <<include>>
+UC2 -- Spoolman
+UC4 -- Spoolman
+UC7 -- Spoolman
+@enduml

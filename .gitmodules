@@ -1,0 +1,6 @@
+[submodule "python"]
+	path = python
+	url = ../pendulum-factory-python.git
+[submodule "cpp"]
+	path = cpp
+	url = ../pendulum-factory-cpp.git

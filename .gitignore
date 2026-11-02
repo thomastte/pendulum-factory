@@ -1,0 +1,15 @@
+# Spoolman database, created by docker compose (the stock is loaded by seed_stock.py)
+spoolman-data/
+
+# Hand-in zips made by tools/make_handin.py
+*.zip
+
+# Python caches (tools/)
+__pycache__/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

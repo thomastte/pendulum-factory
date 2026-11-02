@@ -1,0 +1,54 @@
+@startuml
+skinparam shadowing false
+|Customer|
+start
+:Place order and choose
+a filament for each part;
+|Program|
+:Check the order input;
+if (input valid?) then ([no])
+  :Reject order with reason;
+  stop
+else ([yes])
+endif
+:Ask Spoolman for filaments
+and spools (GET);
+if (answer within 3 s?) then ([no])
+  :Postpone order with reason;
+  stop
+else ([yes])
+endif
+:Find weight position that
+gives the ordered period;
+if (period reachable?) then ([no])
+  :Reject order with reason;
+  stop
+else ([yes])
+endif
+:Check geometry rules;
+if (all rules OK?) then ([no])
+  :Reject order with reason;
+  stop
+else ([yes])
+endif
+:Check filament left on spools;
+if (enough filament?) then ([no])
+  :Postpone order with reason;
+  stop
+else ([yes])
+endif
+fork
+  :Build parts and
+  write one 3MF per part;
+fork again
+  :Simulate swing
+  (C++ program);
+end fork
+:Register filament use (PUT);
+|Spoolman|
+:Subtract used grams
+from the spools;
+|Program|
+:Save results, mark order done;
+stop
+@enduml

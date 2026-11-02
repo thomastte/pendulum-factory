@@ -1,0 +1,16 @@
+# Spoolman: the material stock for the pendulum kit factory.
+# Start: docker compose up -d     Stop: docker compose down
+# The version is pinned so the project behaves the same during assessment.
+# Check the tag exists before relying on it: docker pull ghcr.io/donkie/spoolman:0.27.0
+services:
+  spoolman:
+    image: ghcr.io/donkie/spoolman:0.27.0
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./spoolman-data                       # database on this computer (gitignored)
+        target: /home/app/.local/share/spoolman       # do not change
+    ports:
+      - "7912:8000"                                   # http://localhost:7912
+    environment:
+      - TZ=Europe/Oslo

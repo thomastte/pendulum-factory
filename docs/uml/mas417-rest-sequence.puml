@@ -1,0 +1,25 @@
+@startuml
+skinparam shadowing false
+actor Operator
+participant ":OrderProcessor" as App
+participant "Spoolman REST API" as SP
+Operator -> App : process orders
+App -> SP : GET /api/v1/filament
+alt Spoolman answers
+  SP --> App : 200 OK, filaments
+  App -> SP : GET /api/v1/spool
+  SP --> App : 200 OK, spools
+  alt not enough filament
+    App --> Operator : order postponed (grams missing)
+  else enough filament
+    note over App : design, 3MF files, simulation
+    loop for each filament used
+      App -> SP : PUT /api/v1/spool/ID/use, used grams
+      SP --> App : 200 OK, updated spool
+    end
+    App --> Operator : order done
+  end
+else no answer within 3 s
+  App --> Operator : order postponed (stock offline)
+end
+@enduml
