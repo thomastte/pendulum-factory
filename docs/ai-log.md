@@ -17,5 +17,3 @@ One line per significant use. This feeds the report's "Use of AI" section (requi
 | 2026-11-03 | Øivind | Claude | Checked the Spoolman image tag and the REST calls in plan §5.1 against Spoolman's source code at tag v0.27.0 | Findings only: tag and field names are correct; `remaining_weight` is left out of responses unless the spool has `initial_weight` or the filament has `weight` | Read in `spoolman/api/v1/` at tag v0.27.0; the running instance reports v0.27.0 (bed3f14), the same commit |
 | 2026-11-03 | Øivind | Claude | Status update in `CLAUDE.md`, these log rows, and a message to Thomas about plan §5.1 and the Windows setup snags | Text edits only, no code | Øivind reads the diff in GitHub Desktop before committing |
 | | | | | | |
-| 2026-11-03 | Øivind | Claude | Onboarding walkthrough on Windows (steps 1–5): tool check, C++ build with VS Build Tools, diagnosed Smart App Control blocking the self-built `pendulum_sim.exe`, Python venv + pytest | Instructions only; Øivind ran every step and turned off Smart App Control himself | `pendulum_sim.exe` prints usage; pytest: 4 passed |
-
