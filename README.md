@@ -153,6 +153,8 @@ pytest -m integration      # only the tests against Spoolman; needs it running
 
 Both reviewed each other's pull requests. See the git history of all three repositories.
 
+Planning documents (plan, roadmap, study guide) are in `docs/project/`. Team rules and the AI policy are in `CLAUDE.md`.
+
 ---
 
 ## Third-party software
