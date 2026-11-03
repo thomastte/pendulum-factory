@@ -71,12 +71,13 @@ pytest
 **Done**
 - Three repos on GitHub (`thomastte/...`), submodules linked, drafts committed.
 - Thomas: toolchain works on Windows (Python 3.12.10, g++ 15.2, CMake 4.1, Ninja); `pytest` 4 passed.
+- Øivind: onboarding done on Windows (Python 3.12.10, VS Build Tools/MSVC, CMake 4.4, Docker 29.9); `pytest` 4 passed. Two Windows snags: Smart App Control blocked the self-built `pendulum_sim.exe` (turned off), and Docker Desktop needed WSL (`wsl --install --no-distribution`, then restart).
+- Spoolman runs in Docker; tag `0.27.0` (no `v`) is correct. The REST calls in plan §5.1 match Spoolman v0.27.0. Catch: `remaining_weight` is missing from responses unless the spool has `initial_weight` or the filament has `weight`, so the seed script must always set `initial_weight`.
 
 **Next**
-- Thomas: invite Øivind and the lecturer to all three repos; `params.py`, then the first CadQuery part to 3MF. Undecided whether Thomas rewrites the AI-drafted simulator himself.
-- Øivind: onboarding (`docs/project/onboarding.md`), then Spoolman in Docker.
+- Thomas: invite the lecturer to all three repos (Øivind's access works); `params.py`, then the first CadQuery part to 3MF. Undecided whether Thomas rewrites the AI-drafted simulator himself.
+- Øivind: `config/stock_seed.json` + seed script, `SpoolmanClient` with timeout handling, use case diagram.
 - Both: makerspace survey; plan email to the lecturer **Wed 4 Nov** (needs the Canvas group number; draft in `docs/project/plan-email-draft.md`).
 
 **Known unverified**
-- Spoolman image tag `0.27.0` vs `v0.27.0`, and the REST field names in plan §5.1: check against the running instance.
-- `requirements.txt` isn't pinned yet; pin with `==` once both computers work.
+- `requirements.txt` isn't pinned yet; both computers now work, so it can be pinned with `==`.
