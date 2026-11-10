@@ -3,13 +3,13 @@ type: roadmap
 course: MAS417
 related: "MAS417 Project Plan, MAS417 Repo Setup, MAS417 Plan Email (draft), MAS417 Project – What to Know"
 start: 2026-10-29
-deadline: 2026-11-19
+deadline: 2026-11-20
 tags:
   - MAS417
   - project
 ---
 
-# MAS417 Roadmap: 29 Oct to 19 Nov
+# MAS417 Roadmap: 29 Oct to 20 Nov
 
 > [!NOTE]
 > **Shared copy.** Thomas keeps the original of this note in his Obsidian vault; this copy was synced on 2026-11-03 and converted for GitHub. Paths like `Project/...` and `repo-drafts/...` refer to the vault: the drafts are now the repos themselves. PlantUML blocks don't render on GitHub; the same diagrams are in `docs/uml/*.puml`.
@@ -17,7 +17,7 @@ tags:
 > [!IMPORTANT]
 > **Fixed dates**
 > - **Plan approved:** Fri 6 Nov, 16:00.
-> - **Hand-in:** 19/20 Nov (confirm the time in WISEflow). We hand in **Wed 18 Nov**, which leaves a day of buffer.
+> - **Hand-in deadline:** Fri 20 Nov, 13:00 (WISEflow). We hand in **Wed 18 Nov**, which leaves Thu 19 and Fri morning as buffer.
 
 > [!TIP]
 > **Today, Thu 29 Oct: do these three things**
@@ -51,7 +51,7 @@ Red bars are the **critical path**: if one of them slips, the hand-in slips. The
 
 ```mermaid
 gantt
-    title MAS417 project, 29 Oct to 19 Nov 2026
+    title MAS417 project, 29 Oct to 20 Nov 2026
     dateFormat YYYY-MM-DD
     axisFormat %d %b
     todayMarker stroke-width:3px,stroke:#dc2626
@@ -62,7 +62,7 @@ gantt
     One order end to end              :milestone, crit, m3, 2026-11-11, 0d
     Feature freeze                    :milestone, crit, m4, 2026-11-15, 0d
     Hand in                           :milestone, crit, m5, 2026-11-18, 0d
-    Deadline                          :milestone, m6, 2026-11-19, 0d
+    Deadline 13.00                    :milestone, m6, 2026-11-20, 0d
     section Setup and plan
     Repos, installs, Mac smoke test   :crit, s1, 2026-10-29, 3d
     UML use case + top-level activity :s3, 2026-11-01, 3d
@@ -385,7 +385,7 @@ Check at **M3 (Wed 11 Nov)**. If the end-to-end run doesn't work, cut from the t
 - the Mac fresh test;
 - the pinned `requirements.txt`.
 
-**Buffer:** Thu 19 Nov is completely free. Use it, and don't plan anything into it.
+**Buffer:** Thu 19 Nov and Fri 20 Nov until the 13:00 deadline are completely free. Use them, and don't plan anything into them.
 
 ---
 

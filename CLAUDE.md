@@ -7,7 +7,7 @@ Context for any Claude (or other AI) working in this repo, for Thomas or Øivind
 MAS417 (UiA) group project, "Flexible Production": a web app where a customer orders a 3D-printable pendulum kit with a given swing period. The program designs the parts, checks the filament stock in Spoolman, writes one 3MF file per part, and simulates the swing.
 
 - **Team:** Thomas (product & physics) and Øivind (factory & stock).
-- **Hand-in:** report + zip + full commit ID of this repo in WISEflow. We aim for **Wed 18 Nov 2026**; the deadline is 19/20 Nov.
+- **Hand-in:** report + zip + full commit ID of this repo in WISEflow. We aim for **Wed 18 Nov 2026**; the deadline is **Fri 20 Nov 2026, 13:00**.
 - **Plan, roadmap, study guide:** `docs/project/`. The roadmap checkboxes are the task list. These are copies of Thomas's Obsidian notes; if something here and in Obsidian disagree, ask Thomas.
 
 ## Repo layout
