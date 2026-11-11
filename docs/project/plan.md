@@ -398,7 +398,7 @@ Required by the spec (§3.1):
 - **S1** Positive dimensions: every length field > 0, and `ArmLength` > 0. (`PendClearance` is covered by S3.)
 - **S2** Weight within the arm: `WeightPos − BlockLength/2 ≥ ClrDia/2` (the block clears the collars) and `WeightPos + BlockLength/2 ≤ ArmLength` (the block ends at the arm tip at the latest). `WeightPos` runs from the axle centre to the block's centre.
 - **S3** Clearance to the base: `PendClearance ≥ 5`. The gap under the arm tip always equals `PendClearance`, because `ArmLength` is calculated from it.
-- **S4a** The U fits the printer standing on its base: `BaseWidth`, `BaseDepth` ≤ 246 mm, and `BaseHeight` ≤ usable height (open: 251 mm with the margin at the top only, or 246 mm).
+- **S4a** The U fits the printer standing on its base: `BaseWidth`, `BaseDepth` and `BaseHeight` ≤ 246 mm (the usable size is the same in every direction, decided 11 Nov 2026). Read from `printer.json`: build volume minus 2 × margin.
 - **S4b** The pendulum fits the bed lying down: `AxleLength` ≤ 246 mm and `ArmLength + ClrDia/2` ≤ 246 mm.
 
 Our own (from the U-stand design):
