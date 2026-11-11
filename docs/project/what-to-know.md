@@ -295,17 +295,17 @@ Times are rough first-pass estimates.
 ## 10. 3D printing on Bambu Lab printers
 
 **Understand:**
-- **Printers:** P2S (or A1). Both have a **256 × 256 × 256 mm** build volume and a 0.4 mm nozzle.
+- **Printers:** P1S (or A1). Both have a **256 × 256 × 256 mm** build volume and a 0.4 mm nozzle.
 - **Slicer:** **Bambu Studio** turns the 3MF into printer instructions. After slicing it shows the **filament used in grams**. That's what you compare with our mass estimate, and what you screenshot for the report (§3).
 - **Walls** ("wall loops"): solid outer lines, usually 2, each about 0.42 mm wide.
 - **Infill:** the inside pattern, e.g. 15–20 %. Only that fraction is plastic.
 - **Top/bottom shells:** solid layers at the top and bottom of the part.
 - **Filament types:** PLA (about 1.24–1.26 g/cm³) and PETG (about 1.27 g/cm³). **Look up the exact density in the datasheet for the brand in the makerspace.**
 - **Spool net weight:** usually 1000 g of plastic, not counting the spool itself.
-- **AMS** (automatic material system): lets the P2S print several filaments in one job. We don't rely on it.
+- **AMS** (automatic material system): lets the P1S print several filaments in one job. We don't rely on it.
 - **Never change the filament type on the makerspace printers.**
 
-**Learn from:** the [Bambu Lab wiki](https://wiki.bambulab.com/en/home) (Bambu Studio basics, P2S/A1 pages).
+**Learn from:** the [Bambu Lab wiki](https://wiki.bambulab.com/en/home) (Bambu Studio basics, P1S/A1 pages).
 
 **Check yourself:** if you double the infill, does the mass double? (No. Why not?)
 

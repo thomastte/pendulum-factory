@@ -23,6 +23,7 @@ This is the **main repo**. `python/` and `cpp/` are **git submodules**: separate
 | `docs/uml/`, `docs/ai-log.md`, report | diagrams, AI log | both |
 
 The function signatures the two halves agree on are in `docs/project/plan.md` §8. Don't change them without both agreeing.
+Changed 11 Nov 2026 (Thomas): `validate()` takes only `printer`, not `order`: `problems = params.validate(printer)`, called after `design()`; empty list = OK. The rules are in plan §4.
 
 ## How we work
 

@@ -9,7 +9,7 @@ A small "flexible production" system for MAS417 at UiA.
 |---|---|
 | Languages | Python 3.12 (main program), C++20 (pendulum simulator) |
 | Stock | [Spoolman](https://github.com/Donkie/Spoolman) 0.27.0 in Docker, REST API |
-| Printers | Bambu Lab P2S / A1 (build volume 256 × 256 × 256 mm) |
+| Printers | Bambu Lab P1S / A1 (build volume 256 × 256 × 256 mm) |
 
 ---
 

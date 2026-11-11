@@ -5,7 +5,7 @@ project: Flexible Production – 3D-printable pendulum kit
 spec: "2026-MAS417-Project-Flexible-Production.pdf (third issue, rev. 1, 2026-10-27)"
 deadline: 2026-11-19
 languages: Python + C++
-printer: Bambu Lab P2S (fallback A1), 256 × 256 × 256 mm
+printer: Bambu Lab P1S (fallback A1), 256 × 256 × 256 mm
 tags:
   - MAS417
   - project
@@ -14,7 +14,7 @@ tags:
 # MAS417 Project: Pendulum Kit Factory
 
 > [!NOTE]
-> **Shared copy.** Thomas keeps the original of this note in his Obsidian vault; this copy was synced on 2026-11-03 and converted for GitHub. Paths like `Project/...` and `repo-drafts/...` refer to the vault: the drafts are now the repos themselves. PlantUML blocks don't render on GitHub; the same diagrams are in `docs/uml/*.puml`.
+> **Shared copy.** Thomas keeps the original of this note in his Obsidian vault; this copy was synced on 2026-11-03 and converted for GitHub; §4 (geometry rules), §8, §11 (`validate` signature) and the printer name were updated on 2026-11-11. Paths like `Project/...` and `repo-drafts/...` refer to the vault: the drafts are now the repos themselves. PlantUML blocks don't render on GitHub; the same diagrams are in `docs/uml/*.puml`.
 
 > [!IMPORTANT]
 > **Key dates**
@@ -71,7 +71,7 @@ tags:
 
 1. Try 2–3 weight radii and pick the lightest design that works.
 2. Process orders in parallel with `ProcessPoolExecutor` (about 10 lines).
-3. Print one kit on the P2S, weigh it, and time the swings. This counts as a plus (§8).
+3. Print one kit on the P1S, weigh it, and time the swings. This counts as a plus (§8).
 
 **Budget:** about **25 h of code per person**, plus about 12 h of report and about 9 h of shared work. That is roughly **46 h each**.
 
@@ -115,9 +115,9 @@ flowchart LR
 
 **Decisions to explain in the report:**
 - **The axle is pressed into the stands and the arm turns on it.** Only the arm and weight swing.
-- **One 3MF per part.** Each part can have its own filament. The P2S can do multi-colour jobs with an AMS, but one file per part is simpler and works on both the P2S and the A1.
+- **One 3MF per part.** Each part can have its own filament. The P1S can do multi-colour jobs with an AMS, but one file per part is simpler and works on both the P1S and the A1.
 - **Units:** mm and g in the JSON and CAD. Convert to m and kg *only* inside the physics.
-- **Printer:** Bambu Lab P2S (fallback A1). Both have a **256 × 256 × 256 mm** build volume, so `printer.json` is the same for either. Print the stands lying flat, which makes the stand the tallest part at about 246 mm with a margin.
+- **Printer:** Bambu Lab P1S (fallback A1). Both have a **256 × 256 × 256 mm** build volume, so `printer.json` is the same for either. Print the stands lying flat, which makes the stand the tallest part at about 246 mm with a margin.
 
 ### 3.1 Mass of a printed part (Thomas)
 
@@ -392,14 +392,26 @@ stop
 
 **Postponed orders** are tried again the next time the operator clicks "Process orders".
 
-**Geometry rules** in `validate()` (§3.1), each with its own error message:
-- All dimensions are positive, and infill is between 0 and 1.
-- The weight sits on the arm and clears the hub: `weight_position − R ≥ hub_diameter/2 + 2`.
-- The weight fits between the stands: `weight_thickness ≤ hub_length + 2·side_gap − 2`.
-- There is clearance to the base: `c ≥ 5 mm`.
-- The total height is within the order's limit.
-- Every part fits 256 × 256 × 256 mm with a 5 mm margin.
-- The total mass is within the order's material limit.
+**Geometry rules** in `validate(printer)` (§3.1). It runs after `design()` has found `WeightPos`, and returns a list of problem messages, one per broken rule (empty list = OK). Names are the fields in `python/pendulum/params.py`. Usable printer size: 5 mm free from every edge of the 256 mm bed, so 246 mm. Rules decided 10–11 Nov 2026.
+
+Required by the spec (§3.1):
+- **S1** Positive dimensions: every length field > 0, and `ArmLength` > 0. (`PendClearance` is covered by S3.)
+- **S2** Weight within the arm: `WeightPos − BlockLength/2 ≥ ClrDia/2` (the block clears the collars) and `WeightPos + BlockLength/2 ≤ ArmLength` (the block ends at the arm tip at the latest). `WeightPos` runs from the axle centre to the block's centre.
+- **S3** Clearance to the base: `PendClearance ≥ 5`. The gap under the arm tip always equals `PendClearance`, because `ArmLength` is calculated from it.
+- **S4a** The U fits the printer standing on its base: `BaseWidth`, `BaseDepth` ≤ 246 mm, and `BaseHeight` ≤ usable height (open: 251 mm with the margin at the top only, or 246 mm).
+- **S4b** The pendulum fits the bed lying down: `AxleLength` ≤ 246 mm and `ArmLength + ClrDia/2` ≤ 246 mm.
+
+Our own (from the U-stand design):
+- **O1** Posts fit on the base: `PostDepth ≤ BaseDepth`.
+- **O2** The block fits on the arm: `0 < BlockLengthFrac < 1`.
+- **O3** The block is thicker than the arm: `BlockThickness > ArmThick`.
+- **O4** Collars and arm fit between the posts: `PostGap ≥ 2·(ClrGap + ClrThick) + ArmThick`, and `ClrDia > AxlDia`.
+- **O5** A collar touches an upright before the block does: `ClrGap < SideClearance`.
+- **O6** The slot leaves wall on both sides: `SlotWidth < PostDepth`.
+- **O7** Sensible start angle: `0 < StartAng ≤ 90`.
+- **O8** Sensible print settings: `0 < infill ≤ 1`, `walls ≥ 1`, `line_width > 0`.
+
+The old rules for the order's height limit and material limit are gone: the order gives `BaseHeight`, `BaseWidth` and `BaseDepth` directly, and there is no material limit.
 
 ---
 
@@ -597,6 +609,10 @@ pendulum-factory/                     MAIN repo
 
 ## 8. Agree on these on day 1
 
+> [!NOTE]
+> **Changed since day 1**
+> `PendulumParams` was rewritten for the U-stand design. Its fields are now the ones in `python/pendulum/params.py`, which is the reference; the fields below are the original draft. `validate()` takes only `printer` (11 Nov 2026): `problems = params.validate(printer)`, called after `design()`. The rules are in §4.
+
 ```python
 # params.py (Thomas)
 from dataclasses import dataclass, field, asdict
@@ -634,7 +650,7 @@ class PendulumParams:         # all lengths in mm
     @property
     def stand_height(self): return self.arm_length + self.base_clearance
 
-    def validate(self, printer, order) -> list[str]: ...   # empty list = OK
+    def validate(self, printer) -> list[str]: ...   # empty list = OK; called after design()
 
     def save(self, path):
         with open(path, "w") as f:
@@ -771,7 +787,7 @@ package "Python" {
     +base_clearance: float
     +arm_length(): float
     +stand_height(): float
-    +validate(printer, order): list
+    +validate(printer): list
     +save(path): None
     {static} load(path): PendulumParams
   }

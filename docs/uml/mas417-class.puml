@@ -25,7 +25,7 @@ package "Python" {
     +base_clearance: float
     +arm_length(): float
     +stand_height(): float
-    +validate(printer, order): list
+    +validate(printer): list
     +save(path): None
     {static} load(path): PendulumParams
   }
