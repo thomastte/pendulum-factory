@@ -9,6 +9,7 @@ MAS417 (UiA) group project, "Flexible Production": a web app where a customer or
 - **Team:** Thomas (product & physics) and Øivind (factory & stock).
 - **Hand-in:** report + zip + full commit ID of this repo in WISEflow. We aim for **Wed 18 Nov 2026**; the deadline is **Fri 20 Nov 2026, 13:00**.
 - **Plan, roadmap, study guide:** `docs/project/`. The roadmap checkboxes are the task list. These are copies of Thomas's Obsidian notes; if something here and in Obsidian disagree, ask Thomas.
+- **Design decisions:** `docs/project/design-decisions.md` is the current physical design and order fields. **Where it and `plan.md` disagree, design-decisions.md wins** (plan §3 and §6 are still the first draft).
 
 ## Repo layout
 

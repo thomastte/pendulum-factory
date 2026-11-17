@@ -102,6 +102,9 @@ flowchart LR
 
 ## 3. The pendulum
 
+> [!WARNING]
+> **Design changed (3–17 Nov 2026), see [design-decisions.md](design-decisions.md).** The kit is now a U-stand (base + two posts with axle slots) and a one-piece pendulum (axle, collars, arm, weight block) printed lying down. The table, the figure and the formulas in §3.1–3.3 below are the first draft (disc weight, hub, amplitude as an order field). Still valid: the mass model in §3.1 and the bisection in §3.3. Now: the start angle is fixed at 45° (decision 18), the customer orders the kit's height, width and depth (decision 8), and I, M, d are measured from the CadQuery solids (decision 22).
+
 ![mas417-pendulum-geometry.svg](assets/mas417-pendulum-geometry.svg)
 
 | Symbol | Meaning | Set by |
@@ -529,6 +532,9 @@ end
 ---
 
 ## 6. GUI (Øivind)
+
+> [!WARNING]
+> **Order fields changed, see [design-decisions.md](design-decisions.md) decisions 7, 17–20.** The order is: period, base width, depth and height, and **one filament per printed piece** (the U-stand and the pendulum, so two dropdowns). Not in the order: amplitude (fixed at 45°), infill (set by us), axle diameter, material limit, weight size. The field list below is the first draft.
 
 **Order page (`/`):**
 - Fields: period [s], amplitude [°], max height [mm], axle diameter [mm], max material [g], infill [%].

@@ -3,6 +3,7 @@
 | File | What |
 |---|---|
 | [plan.md](plan.md) | What we build and how: requirements, physics, Spoolman, GUI, code layout, agreed functions (§8), UML, report, testing |
+| [design-decisions.md](design-decisions.md) | The physical design, decided one question at a time. **Overrides plan.md where they differ** |
 | [roadmap.md](roadmap.md) | Dates, milestones and the task checklist |
 | [what-to-know.md](what-to-know.md) | Study guide: what each of us needs to learn, with sources and self-checks |
 | [repo-setup.md](repo-setup.md) | How the main repo and the two submodules work, setup and daily workflow |
