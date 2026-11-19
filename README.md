@@ -140,7 +140,22 @@ pytest -m integration      # only the tests against Spoolman; needs it running
 
 ## Deliverables
 
-`deliverables/` contains the example orders processed for the hand-in and all their output (3MF files, `design.json`, `result.json`, plots). They were produced with the commit listed in `COMMIT.txt` inside the hand-in zip.
+The processed example orders are only in the hand-in zip, not in the repository (`python/orders/` and `python/output/` are gitignored). Each order has its own folder, `deliverables/<order id>/`:
+
+| File | Contents |
+|---|---|
+| `order.json` | The order after processing. `status` is `done` or `rejected`, `reason` explains it, and `result` holds the results: masses, target/calculated/simulated period and the difference, spools used, and the list of files |
+| `design.json` | The shared parameter file used by CAD, calculation and simulation |
+| `*.3mf` | One printable file per part |
+| `sim.csv`, `plot.png` | Simulated motion |
+
+A rejected order has only `order.json`.
+
+The deliverables were produced from the commit listed in `COMMIT.txt` inside the zip:
+1. Empty `python/orders/` and `python/output/`.
+2. Start Spoolman and the web interface (Quick start, steps 1–5).
+3. Copy `python/examples/orders/*.json` into `python/orders/` and click **Process orders** on `/orders`.
+4. Run `python tools/make_handin.py`. It stops if there are uncommitted changes, no orders, or an order that is not `done` or `rejected`.
 
 ---
 
