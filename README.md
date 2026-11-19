@@ -158,8 +158,8 @@ A rejected order has only `order.json`.
 
 The deliverables were produced from the commit listed in `COMMIT.txt` inside the zip:
 1. Empty `python/orders/` and `python/output/`.
-2. Start Spoolman and the web interface (Quick start, steps 1–5).
-3. Copy `python/examples/orders/*.json` into `python/orders/` and click **Process orders** on `/orders`.
+2. Start Spoolman and load the stock (Quick start, steps 1–4).
+3. In `python/`, run `python scripts/process_orders.py examples/orders`.
 4. Run `python tools/make_handin.py`. It stops if there are uncommitted changes, no orders, or an order that is not `done` or `rejected`.
 
 ---
