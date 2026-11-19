@@ -40,7 +40,7 @@ pendulum-factory/                 (this repo)
 | Docker | Docker Desktop | Docker Desktop | Docker Engine + Compose plugin |
 | Git | git-scm.com | included with Xcode tools | `sudo apt install git` |
 
-Use Python 3.12: the pinned NumPy and SciPy versions need 3.12 or newer, and CadQuery does not support 3.13 yet.
+Use Python 3.12: the pinned NumPy and SciPy versions need 3.12 or newer, and the program was developed and tested with 3.12.
 
 ---
 
