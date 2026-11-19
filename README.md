@@ -1,4 +1,4 @@
-# Pendulum Kit Factory: MAS417 Project 2026 (Group __)
+# Pendulum Kit Factory: MAS417 Project 2026 (Group 5)
 
 A small "flexible production" system for MAS417 at UiA.
 - Customers order a 3D-printable pendulum kit with a chosen **swing period** in a web page.
@@ -24,7 +24,7 @@ pendulum-factory/                 (this repo)
 ├── docker-compose.yml            Spoolman, pinned version
 ├── docs/uml/                     UML diagrams (PlantUML sources)
 ├── docs/ai-log.md                log of AI tool use
-├── deliverables/                 processed example orders and their 3MF files
+├── deliverables/                 processed example orders and their 3MF files (only in the hand-in zip)
 └── tools/make_handin.py          builds the hand-in zip
 ```
 
@@ -34,13 +34,13 @@ pendulum-factory/                 (this repo)
 
 | | Windows 10/11 | macOS (Intel or Apple Silicon) | Linux (Ubuntu/Debian) |
 |---|---|---|---|
-| Python 3.11 or 3.12 | python.org installer | `brew install python@3.12` | `sudo apt install python3 python3-venv` |
+| Python 3.12 | python.org installer | `brew install python@3.12` | `sudo apt install python3.12 python3.12-venv` (Ubuntu 24.04) |
 | C++ compiler | Visual Studio Build Tools, "Desktop development with C++" | `xcode-select --install` | `sudo apt install build-essential` |
 | CMake ≥ 3.16 | cmake.org installer | `brew install cmake` | `sudo apt install cmake` |
 | Docker | Docker Desktop | Docker Desktop | Docker Engine + Compose plugin |
 | Git | git-scm.com | included with Xcode tools | `sudo apt install git` |
 
-Python 3.13 is not supported (CadQuery).
+Use Python 3.12: the pinned NumPy and SciPy versions need 3.12 or newer, and CadQuery does not support 3.13 yet.
 
 ---
 
@@ -84,6 +84,8 @@ source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+Steps 4–6 run from the `python/` folder, with the virtual environment active.
+
 **4. Load the stock (see below):**
 ```bash
 python scripts/seed_stock.py
@@ -97,33 +99,35 @@ Open http://localhost:5050.
 - The **order page** is `/`. The **operator page** is `/orders`.
 - Port 5050 is used because macOS uses port 5000 for AirPlay Receiver.
 
-**6. Process orders:** click **Process orders** on the operator page. To process the example orders without the web interface, run `python scripts/process_orders.py examples/orders`.
+**6. Process orders:** click **Process orders** on the operator page. To process the example orders without the web interface, run `python scripts/process_orders.py examples/orders`. The six example orders in `python/examples/orders/` give three `done` (two 80 × 80 × 200 kits and one 100 × 80 × 240 kit) and three `rejected` (a period the kit can't reach, a filament that is not in stock, and a kit too tall for the printer).
 
-Results are written to `python/output/<order id>/`:
+The results of each order are in `python/orders/<order id>.json`: `status` (`done`, `rejected` or `postponed`), `reason`, and `result` with the masses, the target, calculated and simulated period, the difference, and the spools used. The files of a `done` order are in `python/output/<order id>/`:
 
 | File | Contents |
 |---|---|
 | `design.json` | The shared parameter file used by CAD, calculation and simulation |
-| `*.3mf` | One printable file per part |
-| `result.json` | Masses, target/calculated/simulated period, difference, spools used |
+| `u_stand.3mf`, `pendulum.3mf` | One printable file per part |
 | `sim.csv`, `plot.png` | Simulated motion |
 
 ---
 
 ## How the material stock is loaded
 
-The stock is the filament found in the UiA makerspace on <date>. It is listed in `python/config/stock_seed.json`, with:
+The stock is the filament found in the UiA makerspace on 3 November 2026. It is listed in `python/config/stock_seed.json`, with:
 - material, brand and colour;
 - density from the manufacturer's datasheet;
 - net spool weight from the label.
 
-`scripts/seed_stock.py` registers each filament and one spool per filament in Spoolman with POST requests. It skips filaments that already exist, so running it twice is safe.
+`scripts/seed_stock.py` registers each filament and its spools in Spoolman with POST requests: one 1000 g spool per colour, and two for PLA+ Black (a full 1000 g spool and a used one with 150 g left, so the order page shows 1150 g). It skips filaments that already exist, so running it twice is safe.
+
+In a fresh Spoolman the filament ids are 1 White, 2 Black, 3 Red and 4 Blue. The example orders use these ids.
 
 To start again from an empty stock:
 ```bash
 docker compose down
 # delete the spoolman-data/ folder
 docker compose up -d
+cd python && python scripts/seed_stock.py
 ```
 
 ---
@@ -133,6 +137,7 @@ docker compose up -d
 ```bash
 cd python
 pytest                     # unit tests; no Docker needed
+pytest -m slow             # the 6 design() tests, which build the CAD many times (about 25 s)
 pytest -m integration      # only the tests against Spoolman; needs it running
 ```
 
@@ -184,7 +189,7 @@ Planning documents (plan, roadmap, study guide) are in `docs/project/`. Team rul
 | pytest | tests | MIT |
 | Spoolman | material stock (run as a Docker image, not modified) | MIT |
 
-Check each licence against the installed version before hand-in. No third-party source code is copied into this project unless it is marked in a comment.
+No third-party source code is copied into this project unless it is marked in a comment.
 
 ## Use of AI
 
