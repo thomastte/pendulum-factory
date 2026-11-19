@@ -1,4 +1,4 @@
-# AI-assisted (Claude, 2026-11-18): deliverables part (orders + output into deliverables/<id>/, empty/unfinished checks) written by Thomas, explained and reviewed by Claude. Verified: Claude ran the checks and the zip loop on fake orders in a temp folder.
+# AI-assisted (Claude, 2026-11-18/19): deliverables part (orders + output into deliverables/<id>/, empty/unfinished checks) written by Thomas, explained and reviewed by Claude; file-name/id check (2026-11-19) written by Claude. Verified: Claude ran the checks and the zip loop on fake orders in a temp folder.
 """Build the hand-in zip from the main repo and both submodules.
 
 Run from anywhere:  python tools/make_handin.py
@@ -32,6 +32,8 @@ if not order_files:
 
 for path in order_files:
     order = json.loads(path.read_text(encoding="utf-8"))
+    if order["id"] != path.stem:
+        sys.exit(f"{path.name} has id {order['id']}. Order files must be named <id>.json; delete the copy and process again.")
     if order["status"] not in ("done", "rejected"):
         sys.exit(f"Order {path.stem} is {order['status']}. Start Spoolman and process orders again, or delete the order.")
 
